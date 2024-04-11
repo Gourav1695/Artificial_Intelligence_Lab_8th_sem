@@ -1,0 +1,74 @@
+Facts:
+
+// INCORRECT LABELS 
+
+L1W => ~C1W  // asserts that if the label on Box 1 indicates it contains white tennis balls, then the actual contents of Box 1 do not include white tennis balls
+L1Y => ~C1Y
+L1B => ~C1B
+
+L2W => ~C2W
+L2Y => ~C2Y
+L2B => ~C2B
+
+L3W => ~C3W
+L3Y => ~C3Y
+L3B => ~C3B
+
+// ALL DIFFERENT TYPES
+
+C1W ^ C2Y => C3B // means if Box 1 contains white tennis balls and Box 2 contains yellow tennis balls, then Box 3 contains both white and yellow tennis balls.
+C1W ^ C2B => C3Y
+C1Y ^ C2W => C3B
+C1Y ^ C2B => C3W
+C1B ^ C2W => C3Y
+C1B ^ C2Y => C3W
+
+// LABELS AND OBSERVATIONS SHOULD NOT MATCH SINCE LABELS ARE INCORRECT
+
+O1W ^ L1W => ~C1W // means if both the observation and the label from Box 1 indicate it contains white tennis balls, then it logically follows that Box 1 does not contain white tennis balls.
+O1Y ^ L1Y => ~C1Y
+
+O2W ^ L2W => ~C2W
+O2Y ^ L2Y => ~C2Y
+
+O3W ^ L3W => ~C3W
+O3Y ^ L3Y => ~C3Y
+
+// OBSERVATIONS SHOULD BE A SUBSET OF ACTUAL CONTENT
+
+O1W => C1W V C1B // If an observation indicates a white tennis ball was drawn from Box 1, it logically follows that either Box 1 contains white tennis balls or it contains both white and yellow tennis balls
+O1Y => C1Y V C1B
+O1W => ~C1Y
+O1Y => ~C1W
+
+O2W => C2W V C2B
+O2Y => C2Y V C2B
+O2W => ~C2Y
+O2Y => ~C2W
+
+O3W => C3W V C3B
+O3Y => C3Y V C3B
+O3W => ~C3Y
+O3Y => ~C3W
+
+
+
+LETS SOLVE THE THIRD BOX FIRST: 
+
+GIVEN DATA - L3B, O3Y
+
+L3B => ~C3B
+AND O3Y => C3Y V C3B
+SINCE C3B IS FALSE AND 03Y IS TRUE THEN C3Y MUST BE TRUE. THEREFORE, BOX 3 CONTAINS YELLOW.
+
+NOW LETS SOLVE FOR BOX 1
+L1W => ~C1W
+O1W => ~C1Y
+
+THUS BOX 1 MUST CONTAIN BOTH, SO C1B IS TRUE
+
+AND NOW FOR THE SECOND BOX 
+C1B ^ C2W => C3Y
+THEREFORE C2W IS TRUE.
+
+HENCE PROVED!
